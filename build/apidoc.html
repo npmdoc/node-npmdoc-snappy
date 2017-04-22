@@ -1,0 +1,333 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/kesla/node-snappy"
+
+    >snappy (v6.0.0)</a>
+</h1>
+<h4>Nodejs bindings to Google's Snappy compression library</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.snappy">module snappy</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.snappy.compress">
+            function <span class="apidocSignatureSpan">snappy.</span>compress
+            <span class="apidocSignatureSpan">(input, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.snappy.compressSync">
+            function <span class="apidocSignatureSpan">snappy.</span>compressSync
+            <span class="apidocSignatureSpan">(input)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.snappy.isValidCompressed">
+            function <span class="apidocSignatureSpan">snappy.</span>isValidCompressed
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.snappy.isValidCompressedSync">
+            function <span class="apidocSignatureSpan">snappy.</span>isValidCompressedSync
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.snappy.uncompress">
+            function <span class="apidocSignatureSpan">snappy.</span>uncompress
+            <span class="apidocSignatureSpan">(compressed, opts, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.snappy.uncompressSync">
+            function <span class="apidocSignatureSpan">snappy.</span>uncompressSync
+            <span class="apidocSignatureSpan">(compressed, opts)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.snappy" id="apidoc.module.snappy">module snappy</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.snappy.compress" id="apidoc.element.snappy.compress">
+        function <span class="apidocSignatureSpan">snappy.</span>compress
+        <span class="apidocSignatureSpan">(input, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">compress = function (input, callback) {
+  if (!(typeof (input) === &#x27;string&#x27; || Buffer.isBuffer(input))) {
+    return callback(new Error(&#x27;input must be a String or a Buffer&#x27;));
+  }
+
+  binding.compress(input, callback);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+## Example
+
+### Input
+
+```javascript
+var snappy = require(&#x27;snappy&#x27;)
+
+snappy.<span class="apidocCodeKeywordSpan">compress</span>(&#x27;beep boop&#x27;, function (err, compressed) {
+  console.log(&#x27;compressed is a Buffer&#x27;, compressed)
+  // return it as a string
+  snappy.uncompress(compressed, { asBuffer: false }, function (err, original) {
+    console.log(&#x27;the original String&#x27;, original)
+  })
+})
+```
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.snappy.compressSync" id="apidoc.element.snappy.compressSync">
+        function <span class="apidocSignatureSpan">snappy.</span>compressSync
+        <span class="apidocSignatureSpan">(input)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">compressSync = function (input) {
+  assert(typeof (input) === &#x27;string&#x27; || Buffer.isBuffer(input), &#x27;input must be a String or a Buffer&#x27;);
+
+  return binding.compressSync(input);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+### snappy.compress(input, callback)
+
+Compress `input`, which can be a `Buffer` or a `String`.
+
+The `callback` function will be called with a single `error` if the operation failed for any reason. If successful the first argument
+ will be `null` and the second argument will be the `value` as a ``Buffer`.
+
+### snappy.<span class="apidocCodeKeywordSpan">compressSync</span>(input)
+
+The synchronous version of `snappy.compress`, returns the compressed value.
+
+### snappy.uncompress(compressed, [options,] callback)
+
+Uncompress `compressed` and call `callback` with `err` and `decompressed`.
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.snappy.isValidCompressed" id="apidoc.element.snappy.isValidCompressed">
+        function <span class="apidocSignatureSpan">snappy.</span>isValidCompressed
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function isValidCompressed() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+The `callback` function will be called with a single `error` if the operation failed for any reason. If successful the first argument
+ will be `null` and the second argument will be the `value` as a `String` or `Buffer` depending on the `asBuffer` option.
+
+### snappy.uncompressSync(compressed, [options])
+
+The synchronous version of `snappy.uncompress`, returns the uncompressed value.
+
+### snappy.<span class="apidocCodeKeywordSpan">isValidCompressed</span>(input, callback)
+
+Check is input is a valid compressed `Buffer`.
+
+The `callback` function will be called with a single `error` if the operation failed for any reason and the second argument will
+ be `true` if input is a valid snappy compressed Buffer, `false` otherwise.
+
+### snappy.isValidCompressedSync(input)
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.snappy.isValidCompressedSync" id="apidoc.element.snappy.isValidCompressedSync">
+        function <span class="apidocSignatureSpan">snappy.</span>isValidCompressedSync
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function isValidCompressedSync() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+### snappy.isValidCompressed(input, callback)
+
+Check is input is a valid compressed `Buffer`.
+
+The `callback` function will be called with a single `error` if the operation failed for any reason and the second argument will
+ be `true` if input is a valid snappy compressed Buffer, `false` otherwise.
+
+### snappy.<span class="apidocCodeKeywordSpan">isValidCompressedSync</span>(input)
+
+The synchronous version of `snappy.isValidCompressed`, returns a boolean indicating if input was correctly compressed or not.
+
+### stream
+
+For a streaming interface to snappy, please take a look at [snappy-stream](https://www.npmjs.org/package/snappy-stream)
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.snappy.uncompress" id="apidoc.element.snappy.uncompress">
+        function <span class="apidocSignatureSpan">snappy.</span>uncompress
+        <span class="apidocSignatureSpan">(compressed, opts, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">uncompress = function (compressed, opts, callback) {
+  if (!callback) {
+    callback = opts;
+  }
+
+  if (!Buffer.isBuffer(compressed)) {
+    return callback(new Error(&#x27;input must be a Buffer&#x27;));
+  }
+
+  binding.uncompress(compressed, uncompressOpts(opts), callback);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+```javascript
+var snappy = require(&#x27;snappy&#x27;)
+
+snappy.compress(&#x27;beep boop&#x27;, function (err, compressed) {
+  console.log(&#x27;compressed is a Buffer&#x27;, compressed)
+  // return it as a string
+  snappy.<span class="apidocCodeKeywordSpan">uncompress</span>(compressed, { asBuffer: false }, function (err, original) {
+    console.log(&#x27;the original String&#x27;, original)
+  })
+})
+```
+
+### Output
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.snappy.uncompressSync" id="apidoc.element.snappy.uncompressSync">
+        function <span class="apidocSignatureSpan">snappy.</span>uncompressSync
+        <span class="apidocSignatureSpan">(compressed, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">uncompressSync = function (compressed, opts) {
+  assert(Buffer.isBuffer(compressed), &#x27;input must be a Buffer&#x27;);
+
+  return binding.uncompressSync(compressed, uncompressOpts(opts));
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+#### `options`
+
+* `&#x27;asBuffer&#x27;` *(boolean, default: `true`)*: Used to determine whether to return the `value` of the entry as a `String
+` or a Node.js `Buffer` object. Note that converting from a `Buffer` to a `String` incurs a cost so if you need a `String` (and
+the `value` can legitimately become a UFT8 string) then you should fetch it as one with `asBuffer: true` and you&#x27;ll avoid this
+ conversion cost.
+
+The `callback` function will be called with a single `error` if the operation failed for any reason. If successful the first argument
+ will be `null` and the second argument will be the `value` as a `String` or `Buffer` depending on the `asBuffer` option.
+
+### snappy.<span class="apidocCodeKeywordSpan">uncompressSync</span>(compressed, [options])
+
+The synchronous version of `snappy.uncompress`, returns the uncompressed value.
+
+### snappy.isValidCompressed(input, callback)
+
+Check is input is a valid compressed `Buffer`.
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
